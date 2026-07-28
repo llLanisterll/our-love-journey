@@ -8,7 +8,6 @@
     import Timeline from '$lib/components/Timeline.svelte';
     import Gallery from '$lib/components/Gallery.svelte';
     import EventDetails from '$lib/components/EventDetails.svelte';
-    import GiftRSVP from '$lib/components/GiftRSVP.svelte';
 
     let { data } = $props();
 
@@ -69,10 +68,10 @@
         </div>
     </header>
 
-    <!-- 4. Love Counter Stats (Days Together - Dynamic from DB start_date) -->
+    <!-- 4. Love Counter Stats (Days Together) -->
     <LoveCounter startDate={data.config.start_date || '2021-02-14'} />
 
-    <!-- 5. Interactive Love Story Chapters (Dinamis dari Database Supabase) -->
+    <!-- 5. Interactive Love Story Chapters -->
     <LoveStoryChapters chapterItems={data.chapters} />
 
     <!-- 6. Couple Profile & Quote Section -->
@@ -87,14 +86,11 @@
     <!-- 7. Vertical Timeline Section -->
     <Timeline timelineItems={data.timeline} />
 
-    <!-- 8. Special Places & Dates (Dinamis dari Database Supabase) -->
+    <!-- 8. Special Places & Dates -->
     <EventDetails config={data.config} />
 
-    <!-- 9. Gallery Memories Masonry Section -->
+    <!-- 9. Album Foto Kenangan & Catatan Cerita Underneath -->
     <Gallery galleryItems={data.gallery} />
-
-    <!-- 10. Tanda Kasih / Love Wishes -->
-    <GiftRSVP />
 
     <!-- Romantic Footer -->
     <footer class="py-12 md:py-16 px-4 text-center bg-gradient-to-t from-[#fff0f3] to-[#fdf8f5] border-t border-[#f4acb7]/30 space-y-3">
