@@ -2,7 +2,7 @@ import { supabase } from '$lib/supabaseClient';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ url, setHeaders }) {
-    const guestName = url.searchParams.get('to') || 'Sahabat Terkasih';
+    const guestName = url.searchParams.get('to') || 'My Special Girl';
 
     // Disable CDN caching so updates from Admin CMS reflect instantly on refresh
     setHeaders({

@@ -5,7 +5,7 @@
      * Props
      */
     let { 
-        guestName = 'Sahabat Terkasih', 
+        guestName = 'My Special Girl', 
         groomName = 'Bripda Rival', 
         brideName = 'Siti', 
         coverPhotoUrl = '', 
