@@ -326,8 +326,11 @@ export const actions = {
     },
 
     // 10. Logout
-    logout: async () => {
+    logout: async ({ cookies }) => {
+        cookies.delete('sb-access-token', { path: '/' });
+        cookies.delete('sb-refresh-token', { path: '/' });
         await supabase.auth.signOut();
         throw redirect(303, '/admin/login');
     }
 };
+
