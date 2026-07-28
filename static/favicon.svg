@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff0f3"/>
+      <stop offset="100%" stop-color="#ffe5ec"/>
+    </linearGradient>
+    <linearGradient id="heart" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4acb7"/>
+      <stop offset="100%" stop-color="#e89aa7"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#f4acb7" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="140" fill="url(#bg)"/>
+  <path filter="url(#shadow)" fill="url(#heart)" d="M256 432c-12 0-24-5-32-13-72-65-128-116-162-155-38-43-54-79-54-118 0-66 50-116 116-116 37 0 72 17 96 46 24-29 59-46 96-46 66 0 116 50 116 116 0 39-16 75-54 118-34 39-90 90-162 155-8 8-20 13-32 13z"/>
+</svg>
