@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+
+@layer utilities {
+  .font-serif-title {
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  }
+  .font-script {
+    font-family: 'Sacramento', cursive;
+  }
+  .font-body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+.animate-spin-paused {
+  animation-play-state: paused;
+}
