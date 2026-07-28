@@ -28,7 +28,7 @@
     <div class="space-y-3 mb-16">
         <span class="font-script text-3xl md:text-4xl text-[#f4acb7]">Tanda Kasih</span>
         <h2 class="font-serif-title text-3xl md:text-5xl font-bold text-[#4a3b32] tracking-wide">
-            Amplop Digital & Doa Restu
+            Kirim Doa Restu & Kado Spesial
         </h2>
         <div class="w-16 h-0.5 bg-[#f4acb7] mx-auto rounded-full mt-2"></div>
     </div>
@@ -61,7 +61,7 @@
                     in:fly={{ y: 20, duration: 700, delay: 250 }}
                     class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/30 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all space-y-4 text-center"
                 >
-                    <div class="inline-block px-[#fff0f3] text-[#f4acb7] font-bold text-xs rounded-full">
+                    <div class="inline-block px-3 py-1 bg-[#fff0f3] text-[#f4acb7] font-bold text-xs rounded-full">
                         BANK MANDIRI
                     </div>
                     <p class="font-serif-title text-2xl font-bold text-[#4a3b32] tracking-wider">9876 5432 10</p>

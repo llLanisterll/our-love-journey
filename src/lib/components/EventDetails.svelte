@@ -13,32 +13,34 @@
 >
     <!-- Section Title -->
     <div class="space-y-3 mb-16">
-        <span class="font-script text-3xl md:text-4xl text-[#f4acb7]">Momen Suci</span>
+        <span class="font-script text-3xl md:text-4xl text-[#f4acb7]">Momen Spesial</span>
         <h2 class="font-serif-title text-3xl md:text-5xl font-bold text-[#4a3b32] tracking-wide">
-            Acara Pernikahan
+            Tempat Kenangan Indah
         </h2>
         <div class="w-16 h-0.5 bg-[#f4acb7] mx-auto rounded-full mt-2"></div>
     </div>
 
     {#if isVisible}
         <div in:fade={{ duration: 800 }} class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Akad Nikah Card -->
+            <!-- First Date / Meeting Spot Card -->
             <div 
                 in:fly={{ y: 30, duration: 800, delay: 150 }}
                 class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/30 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 space-y-6 flex flex-col justify-between"
             >
                 <div class="space-y-4">
                     <div class="w-14 h-14 rounded-full bg-[#fff0f3] border border-[#f4acb7]/40 flex items-center justify-center text-2xl mx-auto text-[#f4acb7]">
-                        💍
+                        ☕
                     </div>
-                    <h3 class="font-serif-title text-2xl font-bold text-[#4a3b32]">Akad Nikah</h3>
+                    <h3 class="font-serif-title text-2xl font-bold text-[#4a3b32]">Tempat Kencan Pertama</h3>
                     <div class="w-10 h-0.5 bg-[#f4acb7]/50 mx-auto rounded-full"></div>
                     
-                    <p class="text-sm font-semibold text-[#f4acb7] uppercase tracking-wider">Sabtu, 29 November 2026</p>
-                    <p class="text-xs text-[#4a3b32]/80">Pukul 08.00 WIB - Selesai</p>
+                    <p class="text-sm font-semibold text-[#f4acb7] uppercase tracking-wider">Awal Dari Cerita Kami</p>
                     <p class="text-sm text-[#4a3b32] font-medium leading-relaxed">
-                        Gedung Balai Pernikahan Indah<br/>
-                        Jl. Utama No. 123, Kota Bahagia
+                        Kedai Kopi Kenangan Indah<br/>
+                        Jl. Romantic No. 123, Kota Bandung
+                    </p>
+                    <p class="text-xs text-[#4a3b32]/70 italic">
+                        Di mana kecanggungan berubah menjadi tawa dan perbincangan hangat hingga larut malam.
                     </p>
                 </div>
 
@@ -52,23 +54,25 @@
                 </a>
             </div>
 
-            <!-- Resepsi Card -->
+            <!-- Anniversary Spot Card -->
             <div 
                 in:fly={{ y: 30, duration: 800, delay: 300 }}
                 class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/30 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 space-y-6 flex flex-col justify-between"
             >
                 <div class="space-y-4">
                     <div class="w-14 h-14 rounded-full bg-[#fff0f3] border border-[#f4acb7]/40 flex items-center justify-center text-2xl mx-auto text-[#f4acb7]">
-                        🥂
+                        ✨
                     </div>
-                    <h3 class="font-serif-title text-2xl font-bold text-[#4a3b32]">Resepsi Pernikahan</h3>
+                    <h3 class="font-serif-title text-2xl font-bold text-[#4a3b32]">Lokasi Perayaan Spesial</h3>
                     <div class="w-10 h-0.5 bg-[#f4acb7]/50 mx-auto rounded-full"></div>
                     
-                    <p class="text-sm font-semibold text-[#f4acb7] uppercase tracking-wider">Sabtu, 29 November 2026</p>
-                    <p class="text-xs text-[#4a3b32]/80">Pukul 11.00 WIB - 15.00 WIB</p>
+                    <p class="text-sm font-semibold text-[#f4acb7] uppercase tracking-wider">Momen Kebersamaan</p>
                     <p class="text-sm text-[#4a3b32] font-medium leading-relaxed">
-                        Grand Ballroom Hotel Harmoni<br/>
-                        Jl. Utama No. 125, Kota Bahagia
+                        Taman Bunga & Resto Senja<br/>
+                        Jl. Panoramic No. 45, Kota Bandung
+                    </p>
+                    <p class="text-xs text-[#4a3b32]/70 italic">
+                        Tempat impian tempat kami merayakan momen indah dan saling menatap masa depan.
                     </p>
                 </div>
 

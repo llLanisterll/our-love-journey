@@ -25,12 +25,12 @@
             <div class="space-y-3">
                 <span class="font-script text-3xl md:text-4xl text-[#f4acb7]">Kisah Dua Hati</span>
                 <h2 class="font-serif-title text-3xl md:text-5xl font-bold text-[#4a3b32] tracking-wide">
-                    Pasangan Bahagia
+                    Dua Insan Bahagia
                 </h2>
                 <div class="w-16 h-0.5 bg-[#f4acb7] mx-auto rounded-full mt-2"></div>
             </div>
 
-            <!-- Couple Cards (Groom & Bride) -->
+            <!-- Couple Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                 <!-- Groom Card -->
                 <div 
@@ -49,7 +49,7 @@
                         <h3 class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32]">
                             {groomName}
                         </h3>
-                        <p class="text-xs uppercase tracking-widest text-[#f4acb7] font-semibold mt-1">Mempelai Pria</p>
+                        <p class="text-xs uppercase tracking-widest text-[#f4acb7] font-semibold mt-1">The Gentleman</p>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
                         <h3 class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32]">
                             {brideName}
                         </h3>
-                        <p class="text-xs uppercase tracking-widest text-[#f4acb7] font-semibold mt-1">Mempelai Wanita</p>
+                        <p class="text-xs uppercase tracking-widest text-[#f4acb7] font-semibold mt-1">The Lady</p>
                     </div>
                 </div>
             </div>

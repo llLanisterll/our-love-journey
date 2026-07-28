@@ -1,11 +1,11 @@
 <script>
-    import { fade, fly, scale } from 'svelte/transition';
+    import { scale } from 'svelte/transition';
 
     /**
      * Props
      */
     let { 
-        guestName = 'Tamu Undangan', 
+        guestName = 'Sahabat Terkasih', 
         groomName = 'Bripda Rival', 
         brideName = 'Siti', 
         coverPhotoUrl = '', 
@@ -41,31 +41,31 @@
 
         <!-- Header Titles -->
         <div class="mt-12 space-y-2 animate-float">
-            <p class="font-script text-3xl md:text-5xl text-[#f4acb7] tracking-widest drop-shadow-sm">The Wedding Invitation</p>
+            <p class="font-script text-3xl md:text-5xl text-[#f4acb7] tracking-widest drop-shadow-sm">Our Love Journey</p>
             <h1 class="font-serif-title text-4xl md:text-6xl font-bold tracking-tight text-[#fff0f3] drop-shadow-md">
                 {groomName} <span class="text-[#f4acb7] font-script font-normal text-4xl md:text-6xl">&</span> {brideName}
             </h1>
         </div>
 
-        <!-- Central Envelope & Greeting Card -->
+        <!-- Central Love Card Envelope -->
         <div 
             in:scale={{ duration: 900, start: 0.9 }}
             class="w-full max-w-sm my-auto bg-white/15 backdrop-blur-md border border-white/25 rounded-3xl p-8 shadow-2xl space-y-6 relative overflow-hidden group"
         >
-            <!-- Decorative Ribbon / Stamp Seal -->
+            <!-- Decorative Seal -->
             <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#f4acb7] to-[#e8d8c8] mx-auto flex items-center justify-center text-[#4a3b32] font-bold shadow-lg border-2 border-white/40">
-                💌
+                💖
             </div>
 
             <div class="space-y-1">
-                <p class="text-xs text-gray-200 font-light tracking-wider uppercase">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+                <p class="text-xs text-gray-200 font-light tracking-wider uppercase">Halo Spesial Untuk:</p>
                 <h2 class="font-serif-title text-2xl md:text-3xl font-bold text-[#fdf8f5] capitalize">
                     {guestName}
                 </h2>
             </div>
 
             <p class="text-xs text-gray-200 italic leading-relaxed">
-                Tanpa mengurangi rasa hormat, kami mengundang Anda untuk berbagi kebahagiaan di hari istimewa kami.
+                Selamat datang di catatan perjalanan cinta dan kenangan terindah perjalanan kebersamaan kami.
             </p>
 
             <button
@@ -75,16 +75,15 @@
                 class="w-full py-4 px-6 bg-gradient-to-r from-[#f4acb7] via-[#e8d8c8] to-[#f4acb7] hover:brightness-110 text-[#3d2e28] font-bold rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 flex items-center justify-center space-x-2 text-sm tracking-wide animate-pulse-glow"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-89a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                <span>{isOpening ? 'Membuka Undangan...' : 'Buka Undangan'}</span>
+                <span>{isOpening ? 'Membuka Cerita...' : 'Buka Perjalanan Cinta'}</span>
             </button>
         </div>
 
         <!-- Footer Hint -->
         <div class="mb-4 text-xs text-gray-300/80 font-light">
-            <p>*Klik tombol untuk membuka undangan & memutar musik</p>
+            <p>*Klik tombol untuk membuka cerita & memutar musik</p>
         </div>
     </div>
 {/if}

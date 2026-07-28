@@ -39,21 +39,25 @@
     });
 </script>
 
-<div class="grid grid-cols-4 gap-3 max-w-md mx-auto my-6 text-center">
-    <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-2xl p-3 shadow-xs hover:shadow-md transition-shadow">
-        <span class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32] block">{days}</span>
-        <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#f4acb7]">Hari</span>
-    </div>
-    <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-2xl p-3 shadow-xs hover:shadow-md transition-shadow">
-        <span class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32] block">{hours}</span>
-        <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#f4acb7]">Jam</span>
-    </div>
-    <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-2xl p-3 shadow-xs hover:shadow-md transition-shadow">
-        <span class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32] block">{minutes}</span>
-        <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#f4acb7]">Menit</span>
-    </div>
-    <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-2xl p-3 shadow-xs hover:shadow-md transition-shadow">
-        <span class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32] block">{seconds}</span>
-        <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#f4acb7]">Detik</span>
+<div class="space-y-3 my-6">
+    <p class="text-xs uppercase tracking-widest text-[#f4acb7] font-semibold">Menuju Tanggal Spesial Momen Kebersamaan</p>
+
+    <div class="grid grid-cols-4 gap-3 max-w-md mx-auto text-center">
+        <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-2xl p-3 shadow-xs hover:shadow-md transition-shadow">
+            <span class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32] block">{days}</span>
+            <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#f4acb7]">Hari</span>
+        </div>
+        <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-2xl p-3 shadow-xs hover:shadow-md transition-shadow">
+            <span class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32] block">{hours}</span>
+            <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#f4acb7]">Jam</span>
+        </div>
+        <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-2xl p-3 shadow-xs hover:shadow-md transition-shadow">
+            <span class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32] block">{minutes}</span>
+            <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#f4acb7]">Menit</span>
+        </div>
+        <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-2xl p-3 shadow-xs hover:shadow-md transition-shadow">
+            <span class="font-serif-title text-2xl md:text-3xl font-bold text-[#4a3b32] block">{seconds}</span>
+            <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-[#f4acb7]">Detik</span>
+        </div>
     </div>
 </div>
