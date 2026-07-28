@@ -16,7 +16,7 @@ export async function load() {
         .select('*')
         .order('order_index', { ascending: true });
 
-    // 3. Fetch gallery
+    // 3. Fetch gallery cards
     const { data: gallery } = await supabase
         .from('gallery')
         .select('*')
@@ -56,7 +56,7 @@ export const actions = {
         const spot2_title = String(formData.get('spot2_title') || 'Lokasi Perayaan Spesial');
         const spot2_name = String(formData.get('spot2_name') || 'Taman Bunga & Resto Senja');
         const spot2_address = String(formData.get('spot2_address') || 'Jl. Panoramic No. 45, Kota Bandung');
-        const spot2_desc = String(formData.get('spot2_desc') || 'Tempat impian tempat kami merayakan momen indah dan saling menatap masa depan.');
+        const spot2_desc = String(formData.get('spot2_desc') || 'Tempat impian tempat kami merayakan momen indah.');
         const spot2_maps_url = String(formData.get('spot2_maps_url') || 'https://maps.google.com');
 
         const { error } = await supabase
@@ -262,21 +262,23 @@ export const actions = {
         return { success: 'Momen timeline berhasil dihapus.' };
     },
 
-    // 8. Upload Galeri Foto Banyak (Multi-file)
+    // 8. Tambah Kartu Cerita Foto Baru (Dengan Banyak Foto Slide/Carousel)
     uploadGallery: async ({ request }) => {
         const formData = await request.formData();
         const files = formData.getAll('gallery_files');
-        const caption = String(formData.get('caption') || '');
+        const caption = String(formData.get('caption') || 'Momen Spesial');
+        const story = String(formData.get('story') || 'Catatan indah kebersamaan dan kenangan manis.');
+        const order_index = Number(formData.get('order_index') || 0);
 
         if (!files || files.length === 0) {
-            return fail(400, { error: 'Pilih minimal satu foto galeri.' });
+            return fail(400, { error: 'Pilih minimal satu foto untuk kartu cerita.' });
         }
 
-        const insertRows = [];
+        const uploadedUrls = [];
 
         for (const file of files) {
             if (file && file instanceof File && file.size > 0) {
-                const fileName = `gallery_${Date.now()}_${Math.random().toString(36).substring(7)}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '')}`;
+                const fileName = `story_${Date.now()}_${Math.random().toString(36).substring(7)}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '')}`;
                 const filePath = `gallery/${fileName}`;
 
                 const { error: uploadErr } = await supabase.storage
@@ -285,39 +287,42 @@ export const actions = {
 
                 if (!uploadErr) {
                     const { data } = supabase.storage.from('media').getPublicUrl(filePath);
-                    insertRows.push({
-                        image_url: data.publicUrl,
-                        caption: caption || file.name,
-                        order_index: insertRows.length
-                    });
+                    uploadedUrls.push(data.publicUrl);
                 }
             }
         }
 
-        if (insertRows.length > 0) {
-            const { error: dbErr } = await supabase.from('gallery').insert(insertRows);
+        if (uploadedUrls.length > 0) {
+            const { error: dbErr } = await supabase.from('gallery').insert({
+                caption,
+                story,
+                image_url: uploadedUrls[0], // primary photo
+                image_urls: uploadedUrls,    // array of all photos for slider
+                order_index
+            });
+
             if (dbErr) {
-                return fail(400, { error: 'Gagal menyimpan data galeri: ' + dbErr.message });
+                return fail(400, { error: 'Gagal menyimpan kartu cerita foto: ' + dbErr.message });
             }
         }
 
-        return { success: `${insertRows.length} foto berhasil ditambahkan ke galeri!` };
+        return { success: `Kartu cerita foto berhasil dibuat dengan ${uploadedUrls.length} foto slide!` };
     },
 
-    // 9. Hapus Foto Galeri
+    // 9. Hapus Kartu Cerita Foto
     deleteGallery: async ({ request }) => {
         const formData = await request.formData();
         const id = String(formData.get('id') || '');
 
-        if (!id) return fail(400, { error: 'ID foto galeri tidak valid.' });
+        if (!id) return fail(400, { error: 'ID kartu cerita tidak valid.' });
 
         const { error } = await supabase.from('gallery').delete().eq('id', id);
 
         if (error) {
-            return fail(400, { error: 'Gagal menghapus foto galeri: ' + error.message });
+            return fail(400, { error: 'Gagal menghapus kartu cerita: ' + error.message });
         }
 
-        return { success: 'Foto galeri berhasil dihapus.' };
+        return { success: 'Kartu cerita foto berhasil dihapus.' };
     },
 
     // 10. Logout
