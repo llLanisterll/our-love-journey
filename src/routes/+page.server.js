@@ -2,54 +2,20 @@ import { supabase } from '$lib/supabaseClient';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ url }) {
-    // 1. Ambil URL query parameter ?to= (contoh: "Bripda Rival")
     const guestName = url.searchParams.get('to') || 'Sahabat Terkasih';
 
     try {
-        // 2. Fetch site config
-        const { data: configData, error: configErr } = await supabase
-            .from('site_config')
-            .select('*')
-            .limit(1)
-            .maybeSingle();
-
-        if (configErr) {
-            console.warn('Supabase site_config fetch warning:', configErr.message);
-        }
-
-        // 3. Fetch timeline items
-        const { data: timelineData, error: timelineErr } = await supabase
-            .from('timeline')
-            .select('*')
-            .order('order_index', { ascending: true });
-
-        if (timelineErr) {
-            console.warn('Supabase timeline fetch warning:', timelineErr.message);
-        }
-
-        // 4. Fetch gallery items
-        const { data: galleryData, error: galleryErr } = await supabase
-            .from('gallery')
-            .select('*')
-            .order('order_index', { ascending: true });
-
-        if (galleryErr) {
-            console.warn('Supabase gallery fetch warning:', galleryErr.message);
-        }
-
-        // 5. Fetch chapters items
-        const { data: chaptersData, error: chaptersErr } = await supabase
-            .from('chapters')
-            .select('*')
-            .order('order_index', { ascending: true });
-
-        if (chaptersErr) {
-            console.warn('Supabase chapters fetch warning:', chaptersErr.message);
-        }
+        // Fetch ALL 4 Supabase queries in parallel using Promise.all (Super Fast Load!)
+        const [configRes, timelineRes, galleryRes, chaptersRes] = await Promise.all([
+            supabase.from('site_config').select('*').limit(1).maybeSingle(),
+            supabase.from('timeline').select('*').order('order_index', { ascending: true }),
+            supabase.from('gallery').select('*').order('order_index', { ascending: true }),
+            supabase.from('chapters').select('*').order('order_index', { ascending: true })
+        ]);
 
         return {
             guestName,
-            config: configData || {
+            config: configRes.data || {
                 groom_name: 'Bripda Rival',
                 bride_name: 'Siti',
                 main_quote: 'Setiap detik bersamamu adalah takdir terindah dalam hidupku.',
@@ -59,12 +25,12 @@ export async function load({ url }) {
                 bride_photo_url: '',
                 bg_music_url: ''
             },
-            timeline: timelineData || [],
-            gallery: galleryData || [],
-            chapters: chaptersData || []
+            timeline: timelineRes.data || [],
+            gallery: galleryRes.data || [],
+            chapters: chaptersRes.data || []
         };
     } catch (err) {
-        console.error('Error loading public page data:', err);
+        console.error('Error loading public page data in parallel:', err);
         return {
             guestName,
             config: {
