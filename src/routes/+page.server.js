@@ -4,31 +4,27 @@ import { supabase } from '$lib/supabaseClient';
 export async function load({ url, setHeaders }) {
     const guestName = url.searchParams.get('to') || 'Sahabat Terkasih';
 
-    // Set HTTP Cache Headers: Instant response on refresh from browser/CDN memory cache (0ms delay)
+    // Disable CDN caching so updates from Admin CMS reflect instantly on refresh
     setHeaders({
-        'cache-control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=600'
+        'cache-control': 'no-cache, no-store, must-revalidate',
+        'pragma': 'no-cache',
+        'expires': '0'
     });
 
     try {
-        // Guaranteed fast fetch: Timeout fallback after 1200ms if Supabase connection lags
-        const [configRes, timelineRes, galleryRes, chaptersRes] = await Promise.race([
-            Promise.all([
-                supabase.from('site_config').select('*').limit(1).maybeSingle(),
-                supabase.from('timeline').select('*').order('order_index', { ascending: true }),
-                supabase.from('gallery').select('*').order('order_index', { ascending: true }),
-                supabase.from('chapters').select('*').order('order_index', { ascending: true })
-            ]),
-            new Promise((resolve) => 
-                setTimeout(() => resolve([{ data: null }, { data: [] }, { data: [] }, { data: [] }]), 1200)
-            )
+        const [configRes, timelineRes, galleryRes, chaptersRes] = await Promise.all([
+            supabase.from('site_config').select('*').order('updated_at', { ascending: false }).limit(1).maybeSingle(),
+            supabase.from('timeline').select('*').order('order_index', { ascending: true }),
+            supabase.from('gallery').select('*').order('order_index', { ascending: true }),
+            supabase.from('chapters').select('*').order('order_index', { ascending: true })
         ]);
 
         return {
             guestName,
             config: configRes?.data || {
-                groom_name: 'Bripda Rival',
-                bride_name: 'Siti',
-                main_quote: 'Setiap detik bersamamu adalah takdir terindah dalam hidupku.',
+                groom_name: '',
+                bride_name: '',
+                main_quote: '',
                 start_date: '2021-02-14',
                 cover_photo_url: '',
                 groom_photo_url: '',
@@ -40,13 +36,13 @@ export async function load({ url, setHeaders }) {
             chapters: chaptersRes?.data || []
         };
     } catch (err) {
-        console.warn('Fast fallback load triggered:', err);
+        console.error('Error loading public page data from Supabase:', err);
         return {
             guestName,
             config: {
-                groom_name: 'Bripda Rival',
-                bride_name: 'Siti',
-                main_quote: 'Setiap detik bersamamu adalah takdir terindah dalam hidupku.',
+                groom_name: '',
+                bride_name: '',
+                main_quote: '',
                 start_date: '2021-02-14'
             },
             timeline: [],
@@ -55,3 +51,4 @@ export async function load({ url, setHeaders }) {
         };
     }
 }
+

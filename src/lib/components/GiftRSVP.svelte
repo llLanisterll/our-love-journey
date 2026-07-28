@@ -2,6 +2,8 @@
     import { viewport } from '$lib/actions/viewport.js';
     import { fade, fly } from 'svelte/transition';
 
+    let { groomName = 'Pasangan Pria', brideName = 'Pasangan Wanita' } = $props();
+
     let isVisible = $state(false);
     let copiedAccount = $state('');
 
@@ -46,7 +48,7 @@
                         BANK BCA
                     </div>
                     <p class="font-serif-title text-2xl font-bold text-[#4a3b32] tracking-wider">1234 5678 90</p>
-                    <p class="text-xs text-[#4a3b32]/70 font-medium">a.n. Bripda Rival</p>
+                    <p class="text-xs text-[#4a3b32]/70 font-medium">a.n. {groomName}</p>
                     <button
                         type="button"
                         onclick={() => copyToClipboard('1234567890')}
@@ -65,7 +67,7 @@
                         BANK MANDIRI
                     </div>
                     <p class="font-serif-title text-2xl font-bold text-[#4a3b32] tracking-wider">9876 5432 10</p>
-                    <p class="text-xs text-[#4a3b32]/70 font-medium">a.n. Siti</p>
+                    <p class="text-xs text-[#4a3b32]/70 font-medium">a.n. {brideName}</p>
                     <button
                         type="button"
                         onclick={() => copyToClipboard('9876543210')}
