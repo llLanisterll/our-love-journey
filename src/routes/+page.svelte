@@ -8,7 +8,6 @@
     import Timeline from '$lib/components/Timeline.svelte';
     import Gallery from '$lib/components/Gallery.svelte';
     import EventDetails from '$lib/components/EventDetails.svelte';
-    import GiftRSVP from '$lib/components/GiftRSVP.svelte';
 
     let { data } = $props();
 
@@ -92,9 +91,6 @@
 
     <!-- 9. Album Foto Kenangan & Catatan Cerita Underneath -->
     <Gallery galleryItems={data.gallery} />
-
-    <!-- 10. Digital Gift & RSVP -->
-    <GiftRSVP groomName={data.config.groom_name} brideName={data.config.bride_name} />
 
 
     <!-- Romantic Footer -->
