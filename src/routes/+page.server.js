@@ -37,6 +37,16 @@ export async function load({ url }) {
             console.warn('Supabase gallery fetch warning:', galleryErr.message);
         }
 
+        // 5. Fetch chapters items
+        const { data: chaptersData, error: chaptersErr } = await supabase
+            .from('chapters')
+            .select('*')
+            .order('order_index', { ascending: true });
+
+        if (chaptersErr) {
+            console.warn('Supabase chapters fetch warning:', chaptersErr.message);
+        }
+
         return {
             guestName,
             config: configData || {
@@ -50,7 +60,8 @@ export async function load({ url }) {
                 bg_music_url: ''
             },
             timeline: timelineData || [],
-            gallery: galleryData || []
+            gallery: galleryData || [],
+            chapters: chaptersData || []
         };
     } catch (err) {
         console.error('Error loading public page data:', err);
@@ -63,7 +74,8 @@ export async function load({ url }) {
                 start_date: '2021-02-14'
             },
             timeline: [],
-            gallery: []
+            gallery: [],
+            chapters: []
         };
     }
 }

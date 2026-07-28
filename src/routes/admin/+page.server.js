@@ -22,22 +22,42 @@ export async function load() {
         .select('*')
         .order('order_index', { ascending: true });
 
+    // 4. Fetch chapters
+    const { data: chapters } = await supabase
+        .from('chapters')
+        .select('*')
+        .order('order_index', { ascending: true });
+
     return {
         config: config || {},
         timeline: timeline || [],
-        gallery: gallery || []
+        gallery: gallery || [],
+        chapters: chapters || []
     };
 }
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    // 1. Update nama pasangan, start date, & quotes
+    // 1. Update nama pasangan, start date, quotes & tempat kenangan
     updateConfig: async ({ request }) => {
         const formData = await request.formData();
         const groom_name = String(formData.get('groom_name') || '');
         const bride_name = String(formData.get('bride_name') || '');
         const main_quote = String(formData.get('main_quote') || '');
         const start_date = String(formData.get('start_date') || '2021-02-14');
+
+        // Dynamic Tempat Kenangan Spot 1 & Spot 2
+        const spot1_title = String(formData.get('spot1_title') || 'Tempat Kencan Pertama');
+        const spot1_name = String(formData.get('spot1_name') || 'Kedai Kopi Kenangan Indah');
+        const spot1_address = String(formData.get('spot1_address') || 'Jl. Romantic No. 123, Kota Bandung');
+        const spot1_desc = String(formData.get('spot1_desc') || 'Di mana kecanggungan berubah menjadi tawa dan perbincangan hangat.');
+        const spot1_maps_url = String(formData.get('spot1_maps_url') || 'https://maps.google.com');
+
+        const spot2_title = String(formData.get('spot2_title') || 'Lokasi Perayaan Spesial');
+        const spot2_name = String(formData.get('spot2_name') || 'Taman Bunga & Resto Senja');
+        const spot2_address = String(formData.get('spot2_address') || 'Jl. Panoramic No. 45, Kota Bandung');
+        const spot2_desc = String(formData.get('spot2_desc') || 'Tempat impian tempat kami merayakan momen indah dan saling menatap masa depan.');
+        const spot2_maps_url = String(formData.get('spot2_maps_url') || 'https://maps.google.com');
 
         const { error } = await supabase
             .from('site_config')
@@ -47,6 +67,16 @@ export const actions = {
                 bride_name,
                 main_quote,
                 start_date,
+                spot1_title,
+                spot1_name,
+                spot1_address,
+                spot1_desc,
+                spot1_maps_url,
+                spot2_title,
+                spot2_name,
+                spot2_address,
+                spot2_desc,
+                spot2_maps_url,
                 updated_at: new Date().toISOString()
             });
 
@@ -54,7 +84,7 @@ export const actions = {
             return fail(400, { error: 'Gagal memperbarui konfigurasi: ' + error.message });
         }
 
-        return { success: 'Konfigurasi teks & tanggal berhasil disimpan!' };
+        return { success: 'Konfigurasi teks & tempat kenangan berhasil disimpan!' };
     },
 
     // 2. Upload Audio Background (.mp3)
@@ -69,7 +99,6 @@ export const actions = {
         const fileName = `audio_${Date.now()}_${audioFile.name.replace(/[^a-zA-Z0-9._-]/g, '')}`;
         const filePath = `audio/${fileName}`;
 
-        // Upload ke Supabase Storage bucket 'media'
         const { error: uploadErr } = await supabase.storage
             .from('media')
             .upload(filePath, audioFile, {
@@ -81,14 +110,12 @@ export const actions = {
             return fail(400, { error: 'Gagal mengunggah file audio: ' + uploadErr.message });
         }
 
-        // Dapatkan Public URL
         const { data: publicUrlData } = supabase.storage
             .from('media')
             .getPublicUrl(filePath);
 
         const bg_music_url = publicUrlData.publicUrl;
 
-        // Update di database
         const { error: dbErr } = await supabase
             .from('site_config')
             .upsert({
@@ -155,7 +182,48 @@ export const actions = {
         return { success: 'Foto media utama berhasil diperbarui!' };
     },
 
-    // 4. Tambah Timeline Baru
+    // 4. Tambah Bab Cerita Baru (Chapters CRUD)
+    addChapter: async ({ request }) => {
+        const formData = await request.formData();
+        const num = String(formData.get('num') || 'Bab I');
+        const title = String(formData.get('title') || '');
+        const subtitle = String(formData.get('subtitle') || '');
+        const icon = String(formData.get('icon') || '🌱');
+        const story = String(formData.get('story') || '');
+        const order_index = Number(formData.get('order_index') || 0);
+
+        if (!title || !story) {
+            return fail(400, { error: 'Judul dan isi cerita bab wajib diisi.' });
+        }
+
+        const { error } = await supabase
+            .from('chapters')
+            .insert({ num, title, subtitle, icon, story, order_index });
+
+        if (error) {
+            return fail(400, { error: 'Gagal menambah bab cerita: ' + error.message });
+        }
+
+        return { success: 'Bab cerita berhasil ditambahkan!' };
+    },
+
+    // 5. Hapus Bab Cerita
+    deleteChapter: async ({ request }) => {
+        const formData = await request.formData();
+        const id = String(formData.get('id') || '');
+
+        if (!id) return fail(400, { error: 'ID bab cerita tidak valid.' });
+
+        const { error } = await supabase.from('chapters').delete().eq('id', id);
+
+        if (error) {
+            return fail(400, { error: 'Gagal menghapus bab cerita: ' + error.message });
+        }
+
+        return { success: 'Bab cerita berhasil dihapus.' };
+    },
+
+    // 6. Tambah Timeline Baru
     addTimeline: async ({ request }) => {
         const formData = await request.formData();
         const date_label = String(formData.get('date_label') || '');
@@ -178,7 +246,7 @@ export const actions = {
         return { success: 'Momen cerita berhasil ditambahkan ke timeline!' };
     },
 
-    // 5. Hapus Timeline
+    // 7. Hapus Timeline
     deleteTimeline: async ({ request }) => {
         const formData = await request.formData();
         const id = String(formData.get('id') || '');
@@ -194,7 +262,7 @@ export const actions = {
         return { success: 'Momen timeline berhasil dihapus.' };
     },
 
-    // 6. Upload Galeri Foto Banyak (Multi-file)
+    // 8. Upload Galeri Foto Banyak (Multi-file)
     uploadGallery: async ({ request }) => {
         const formData = await request.formData();
         const files = formData.getAll('gallery_files');
@@ -236,7 +304,7 @@ export const actions = {
         return { success: `${insertRows.length} foto berhasil ditambahkan ke galeri!` };
     },
 
-    // 7. Hapus Foto Galeri
+    // 9. Hapus Foto Galeri
     deleteGallery: async ({ request }) => {
         const formData = await request.formData();
         const id = String(formData.get('id') || '');
@@ -252,7 +320,7 @@ export const actions = {
         return { success: 'Foto galeri berhasil dihapus.' };
     },
 
-    // 8. Logout
+    // 10. Logout
     logout: async () => {
         await supabase.auth.signOut();
         throw redirect(303, '/admin/login');

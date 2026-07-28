@@ -72,8 +72,8 @@
     <!-- 4. Love Counter Stats (Days Together - Dynamic from DB start_date) -->
     <LoveCounter startDate={data.config.start_date || '2021-02-14'} />
 
-    <!-- 5. Interactive Love Story Chapters (Bab I - IV) -->
-    <LoveStoryChapters />
+    <!-- 5. Interactive Love Story Chapters (Dinamis dari Database Supabase) -->
+    <LoveStoryChapters chapterItems={data.chapters} />
 
     <!-- 6. Couple Profile & Quote Section -->
     <CoupleProfile
@@ -87,8 +87,8 @@
     <!-- 7. Vertical Timeline Section -->
     <Timeline timelineItems={data.timeline} />
 
-    <!-- 8. Special Places & Dates -->
-    <EventDetails />
+    <!-- 8. Special Places & Dates (Dinamis dari Database Supabase) -->
+    <EventDetails config={data.config} />
 
     <!-- 9. Gallery Memories Masonry Section -->
     <Gallery galleryItems={data.gallery} />

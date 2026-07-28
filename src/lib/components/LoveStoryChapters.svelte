@@ -2,10 +2,12 @@
     import { viewport } from '$lib/actions/viewport.js';
     import { fade, fly } from 'svelte/transition';
 
+    let { chapterItems = [] } = $props();
+
     let isVisible = $state(false);
     let activeChapter = $state(0);
 
-    const chapters = [
+    const defaultChapters = [
         {
             num: 'Bab I',
             title: 'Pertemuan Pertama',
@@ -35,6 +37,8 @@
             story: 'Kisah ini tidak berhenti di sini. Kami siap menuliskan bab-bab baru dalam buku kehidupan kami dengan penuh cinta, harapan, dan doa.'
         }
     ];
+
+    let chapters = $derived(chapterItems.length > 0 ? chapterItems : defaultChapters);
 </script>
 
 <section 
@@ -69,27 +73,29 @@
 
             <!-- Active Chapter Content Card -->
             {#key activeChapter}
-                <div 
-                    in:fly={{ y: 20, duration: 600 }}
-                    class="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden space-y-6 text-center"
-                >
-                    <div class="w-16 h-16 rounded-full bg-[#fff0f3] border border-[#f4acb7]/40 flex items-center justify-center text-3xl mx-auto">
-                        {chapters[activeChapter].icon}
-                    </div>
+                {#if chapters[activeChapter]}
+                    <div 
+                        in:fly={{ y: 20, duration: 600 }}
+                        class="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm border border-[#f4acb7]/40 rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden space-y-6 text-center"
+                    >
+                        <div class="w-16 h-16 rounded-full bg-[#fff0f3] border border-[#f4acb7]/40 flex items-center justify-center text-3xl mx-auto">
+                            {chapters[activeChapter].icon || '📖'}
+                        </div>
 
-                    <div class="space-y-1">
-                        <span class="text-xs font-bold uppercase tracking-widest text-[#f4acb7]">
-                            {chapters[activeChapter].num} &sdot; {chapters[activeChapter].subtitle}
-                        </span>
-                        <h3 class="font-serif-title text-2xl md:text-4xl font-bold text-[#4a3b32]">
-                            {chapters[activeChapter].title}
-                        </h3>
-                    </div>
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold uppercase tracking-widest text-[#f4acb7]">
+                                {chapters[activeChapter].num} &sdot; {chapters[activeChapter].subtitle || ''}
+                            </span>
+                            <h3 class="font-serif-title text-2xl md:text-4xl font-bold text-[#4a3b32]">
+                                {chapters[activeChapter].title}
+                            </h3>
+                        </div>
 
-                    <p class="font-serif-title italic text-base md:text-lg text-[#4a3b32]/90 leading-relaxed px-4">
-                        "{chapters[activeChapter].story}"
-                    </p>
-                </div>
+                        <p class="font-serif-title italic text-base md:text-lg text-[#4a3b32]/90 leading-relaxed px-4">
+                            "{chapters[activeChapter].story}"
+                        </p>
+                    </div>
+                {/if}
             {/key}
         </div>
     {/if}
