@@ -1,4 +1,6 @@
 <script>
+    import { enhance } from '$app/forms';
+
     let { form } = $props();
     let isLoading = $state(false);
 </script>
@@ -21,7 +23,18 @@
             </div>
         {/if}
 
-        <form method="POST" action="?/login" onsubmit={() => isLoading = true} class="space-y-4">
+        <form 
+            method="POST" 
+            action="?/login" 
+            use:enhance={() => {
+                isLoading = true;
+                return async ({ update }) => {
+                    isLoading = false;
+                    await update();
+                };
+            }} 
+            class="space-y-4"
+        >
             <div>
                 <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-[#4a3b32] mb-1.5">
                     Email Admin
