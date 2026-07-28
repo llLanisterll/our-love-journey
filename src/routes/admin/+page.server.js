@@ -31,12 +31,13 @@ export async function load() {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    // 1. Update nama pasangan & quotes
+    // 1. Update nama pasangan, start date, & quotes
     updateConfig: async ({ request }) => {
         const formData = await request.formData();
         const groom_name = String(formData.get('groom_name') || '');
         const bride_name = String(formData.get('bride_name') || '');
         const main_quote = String(formData.get('main_quote') || '');
+        const start_date = String(formData.get('start_date') || '2021-02-14');
 
         const { error } = await supabase
             .from('site_config')
@@ -45,6 +46,7 @@ export const actions = {
                 groom_name,
                 bride_name,
                 main_quote,
+                start_date,
                 updated_at: new Date().toISOString()
             });
 
@@ -52,7 +54,7 @@ export const actions = {
             return fail(400, { error: 'Gagal memperbarui konfigurasi: ' + error.message });
         }
 
-        return { success: 'Konfigurasi teks berhasil disimpan!' };
+        return { success: 'Konfigurasi teks & tanggal berhasil disimpan!' };
     },
 
     // 2. Upload Audio Background (.mp3)

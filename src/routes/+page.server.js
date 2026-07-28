@@ -3,7 +3,7 @@ import { supabase } from '$lib/supabaseClient';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ url }) {
     // 1. Ambil URL query parameter ?to= (contoh: "Bripda Rival")
-    const guestName = url.searchParams.get('to') || 'Tamu Undangan';
+    const guestName = url.searchParams.get('to') || 'Sahabat Terkasih';
 
     try {
         // 2. Fetch site config
@@ -43,6 +43,7 @@ export async function load({ url }) {
                 groom_name: 'Bripda Rival',
                 bride_name: 'Siti',
                 main_quote: 'Setiap detik bersamamu adalah takdir terindah dalam hidupku.',
+                start_date: '2021-02-14',
                 cover_photo_url: '',
                 groom_photo_url: '',
                 bride_photo_url: '',
@@ -58,7 +59,8 @@ export async function load({ url }) {
             config: {
                 groom_name: 'Bripda Rival',
                 bride_name: 'Siti',
-                main_quote: 'Setiap detik bersamamu adalah takdir terindah dalam hidupku.'
+                main_quote: 'Setiap detik bersamamu adalah takdir terindah dalam hidupku.',
+                start_date: '2021-02-14'
             },
             timeline: [],
             gallery: []

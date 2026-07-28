@@ -69,8 +69,8 @@
         </div>
     </header>
 
-    <!-- 4. Love Counter Stats (Days Together) -->
-    <LoveCounter startDate="2021-02-14" />
+    <!-- 4. Love Counter Stats (Days Together - Dynamic from DB start_date) -->
+    <LoveCounter startDate={data.config.start_date || '2021-02-14'} />
 
     <!-- 5. Interactive Love Story Chapters (Bab I - IV) -->
     <LoveStoryChapters />

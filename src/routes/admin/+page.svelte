@@ -4,7 +4,6 @@
     let { data, form } = $props();
 
     let activeTab = $state('config'); // 'config' | 'media' | 'audio' | 'timeline' | 'gallery'
-    let isSubmitting = $state(false);
 </script>
 
 <svelte:head>
@@ -32,7 +31,7 @@
                     target="_blank"
                     class="px-4 py-2 bg-[#fff0f3] hover:bg-[#ffe5ec] text-[#3d2e28] text-xs font-semibold rounded-xl border border-[#f4acb7]/40 transition-colors flex items-center space-x-1"
                 >
-                    <span>👁️ Pratinjau Undangan</span>
+                    <span>👁️ Pratinjau Website</span>
                 </a>
 
                 <form method="POST" action="?/logout">
@@ -69,7 +68,7 @@
                 onclick={() => activeTab = 'config'}
                 class="px-5 py-2.5 rounded-xl font-semibold text-xs transition-all whitespace-nowrap {activeTab === 'config' ? 'bg-[#f4acb7] text-white shadow-md' : 'bg-white text-[#4a3b32] hover:bg-[#fff0f3]'}"
             >
-                📝 Nama & Quote
+                📝 Nama, Tanggal & Quote
             </button>
             <button 
                 type="button"
@@ -101,16 +100,16 @@
             </button>
         </div>
 
-        <!-- TAB 1: NAMA & QUOTE -->
+        <!-- TAB 1: NAMA, TANGGAL & QUOTE -->
         {#if activeTab === 'config'}
             <div class="bg-white border border-[#f4acb7]/30 rounded-3xl p-6 md:p-8 shadow-sm space-y-6">
-                <h2 class="font-serif-title text-2xl font-bold text-[#4a3b32]">Pengaturan Nama Pasangan & Quote</h2>
+                <h2 class="font-serif-title text-2xl font-bold text-[#4a3b32]">Pengaturan Nama Pasangan, Tanggal & Quote</h2>
 
                 <form method="POST" action="?/updateConfig" use:enhance class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="groom_name" class="block text-xs font-semibold uppercase tracking-wider text-[#4a3b32] mb-2">
-                                Nama Mempelai Pria (Groom)
+                                Nama Pasangan (Pria)
                             </label>
                             <input 
                                 type="text" 
@@ -124,7 +123,7 @@
 
                         <div>
                             <label for="bride_name" class="block text-xs font-semibold uppercase tracking-wider text-[#4a3b32] mb-2">
-                                Nama Mempelai Wanita (Bride)
+                                Nama Pasangan (Wanita)
                             </label>
                             <input 
                                 type="text" 
@@ -135,6 +134,20 @@
                                 class="w-full px-4 py-3 bg-[#fdf8f5] border border-[#f4acb7]/30 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#f4acb7]"
                             />
                         </div>
+                    </div>
+
+                    <div>
+                        <label for="start_date" class="block text-xs font-semibold uppercase tracking-wider text-[#4a3b32] mb-2">
+                            Tanggal Mulai Hubungan / Kebersamaan (Untuk Hitung Hari Otomatis)
+                        </label>
+                        <input 
+                            type="date" 
+                            id="start_date" 
+                            name="start_date" 
+                            value={data.config.start_date || '2021-02-14'} 
+                            required
+                            class="w-full px-4 py-3 bg-[#fdf8f5] border border-[#f4acb7]/30 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#f4acb7]"
+                        />
                     </div>
 
                     <div>
@@ -154,7 +167,7 @@
                         type="submit"
                         class="px-6 py-3 bg-[#f4acb7] hover:bg-[#e89aa7] text-white font-bold rounded-xl shadow-md transition-all text-sm"
                     >
-                        Simpan Perubahan Teks
+                        Simpan Perubahan Teks & Tanggal
                     </button>
                 </form>
             </div>
@@ -189,7 +202,7 @@
                         <!-- Groom Photo -->
                         <div class="space-y-3">
                             <label for="groom_photo" class="block text-xs font-semibold uppercase tracking-wider text-[#4a3b32]">
-                                Foto Mempelai Pria
+                                Foto Pasangan Pria
                             </label>
                             {#if data.config.groom_photo_url}
                                 <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-[#f4acb7] mb-2 mx-auto">
@@ -208,7 +221,7 @@
                         <!-- Bride Photo -->
                         <div class="space-y-3">
                             <label for="bride_photo" class="block text-xs font-semibold uppercase tracking-wider text-[#4a3b32]">
-                                Foto Mempelai Wanita
+                                Foto Pasangan Wanita
                             </label>
                             {#if data.config.bride_photo_url}
                                 <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-[#f4acb7] mb-2 mx-auto">
