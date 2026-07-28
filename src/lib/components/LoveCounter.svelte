@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from 'svelte';
     import { viewport } from '$lib/actions/viewport.js';
     import { fade, scale } from 'svelte/transition';
 
@@ -9,16 +8,17 @@
     let monthsTogether = $state(0);
     let isVisible = $state(false);
 
-    function calculateStats() {
+    $effect(() => {
         const start = new Date(startDate).getTime();
         const now = new Date().getTime();
-        const diffTime = Math.abs(now - start);
+        if (isNaN(start)) {
+            daysTogether = 0;
+            monthsTogether = 0;
+            return;
+        }
+        const diffTime = Math.max(0, now - start);
         daysTogether = Math.floor(diffTime / (1000 * 60 * 60 * 24));
         monthsTogether = Math.floor(daysTogether / 30.4375);
-    }
-
-    onMount(() => {
-        calculateStats();
     });
 </script>
 

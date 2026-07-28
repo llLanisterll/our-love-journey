@@ -30,7 +30,18 @@
     function closeLightbox() {
         selectedImage = null;
     }
+
+    /**
+     * @param {KeyboardEvent} e
+     */
+    function handleKeyDown(e) {
+        if (e.key === 'Escape' && selectedImage) {
+            closeLightbox();
+        }
+    }
 </script>
+
+<svelte:window onkeydown={handleKeyDown} />
 
 <section 
     id="gallery" 
@@ -57,7 +68,8 @@
                 <button
                     type="button"
                     onclick={() => openLightbox(item)}
-                    class="w-full text-left group break-inside-avoid relative overflow-hidden rounded-2xl border border-[#f4acb7]/30 shadow-xs hover:shadow-xl transition-all duration-500 focus:outline-none"
+                    class="w-full text-left group break-inside-avoid relative overflow-hidden rounded-2xl border border-[#f4acb7]/30 shadow-xs hover:shadow-xl transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-[#f4acb7]"
+                    aria-label={`Buka foto ${item.caption || 'galeri'}`}
                 >
                     <img 
                         src={item.image_url} 
