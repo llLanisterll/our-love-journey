@@ -53,8 +53,8 @@
     <MobileNav />
 
     <!-- 3. Hero Header Section -->
-    <header id="hero-section" class="relative py-20 md:py-28 text-center px-4 bg-gradient-to-b from-[#fff0f3] via-[#fdf8f5] to-[#fdf8f5] border-b border-[#f4acb7]/20 overflow-hidden">
-        <div class="max-w-3xl mx-auto space-y-4 md:space-y-6 relative z-10">
+    <header id="hero-section" class="relative py-20 md:py-28 text-center px-4 bg-gradient-to-b from-[#fff0f3] via-[#fdf8f5] to-[#fdf8f5] border-b border-[#f4acb7]/20 overflow-hidden perspective-container">
+        <div class="max-w-3xl mx-auto space-y-4 md:space-y-6 relative z-10 animate-float">
             <span class="font-script text-3xl sm:text-4xl md:text-5xl text-[#f4acb7] tracking-wider block">Our Love Story</span>
             
             <h1 class="font-serif-title text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-[#4a3b32] drop-shadow-xs leading-tight">

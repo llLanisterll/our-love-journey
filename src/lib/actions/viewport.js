@@ -1,14 +1,17 @@
 /**
  * Svelte Action: viewport
- * Memicu event 'enterViewport' dan 'exitViewport' saat elemen masuk/keluar dari viewport.
- * Juga secara otomatis menambahkan kelas CSS animasi jika diberikan `animationClass`.
+ * Memicu callback `onEnter` dan `onExit` saat elemen masuk/keluar dari viewport.
  * 
  * @param {HTMLElement} node 
- * @param {{ threshold?: number, once?: boolean, rootMargin?: string, root?: Element | null, animationClass?: string }} [options]
+ * @param {{ threshold?: number, once?: boolean, rootMargin?: string, root?: Element | null, onEnter?: () => void, onExit?: () => void, animationClass?: string } | (() => void)} [param]
  */
-export function viewport(node, options = { threshold: 0.15, once: true, rootMargin: '0px' }) {
+export function viewport(node, param) {
     /** @type {IntersectionObserver | null} */
     let observer = null;
+
+    let options = typeof param === 'function' 
+        ? { onEnter: param, threshold: 0.05, once: true } 
+        : { threshold: 0.05, once: true, ...param };
 
     /**
      * @param {IntersectionObserverEntry[]} entries
@@ -16,6 +19,9 @@ export function viewport(node, options = { threshold: 0.15, once: true, rootMarg
     function handleIntersect(entries) {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
+                if (typeof options.onEnter === 'function') {
+                    options.onEnter();
+                }
                 node.dispatchEvent(new CustomEvent('enterViewport'));
                 node.dispatchEvent(new CustomEvent('enterviewport'));
                 if (options.animationClass) {
@@ -25,6 +31,9 @@ export function viewport(node, options = { threshold: 0.15, once: true, rootMarg
                     observer.unobserve(node);
                 }
             } else {
+                if (typeof options.onExit === 'function') {
+                    options.onExit();
+                }
                 node.dispatchEvent(new CustomEvent('exitViewport'));
                 node.dispatchEvent(new CustomEvent('exitviewport'));
                 if (!options.once && options.animationClass) {
@@ -36,6 +45,9 @@ export function viewport(node, options = { threshold: 0.15, once: true, rootMarg
 
     function initObserver() {
         if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+            if (typeof options.onEnter === 'function') {
+                options.onEnter();
+            }
             node.dispatchEvent(new CustomEvent('enterViewport'));
             node.dispatchEvent(new CustomEvent('enterviewport'));
             if (options.animationClass) {
@@ -47,7 +59,7 @@ export function viewport(node, options = { threshold: 0.15, once: true, rootMarg
         observer = new IntersectionObserver(handleIntersect, {
             root: options.root || null,
             rootMargin: options.rootMargin || '0px',
-            threshold: options.threshold ?? 0.15
+            threshold: options.threshold ?? 0.05
         });
 
         observer.observe(node);
@@ -57,10 +69,12 @@ export function viewport(node, options = { threshold: 0.15, once: true, rootMarg
 
     return {
         /**
-         * @param {{ threshold?: number, once?: boolean, rootMargin?: string, root?: Element | null, animationClass?: string }} newOptions
+         * @param {{ threshold?: number, once?: boolean, rootMargin?: string, root?: Element | null, onEnter?: () => void, onExit?: () => void, animationClass?: string } | (() => void)} newParam
          */
-        update(newOptions) {
-            options = { ...options, ...newOptions };
+        update(newParam) {
+            options = typeof newParam === 'function' 
+                ? { onEnter: newParam, threshold: 0.05, once: true } 
+                : { threshold: 0.05, once: true, ...newParam };
         },
         destroy() {
             if (observer) {
