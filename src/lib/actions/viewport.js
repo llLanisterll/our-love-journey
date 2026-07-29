@@ -17,6 +17,7 @@ export function viewport(node, options = { threshold: 0.15, once: true, rootMarg
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 node.dispatchEvent(new CustomEvent('enterViewport'));
+                node.dispatchEvent(new CustomEvent('enterviewport'));
                 if (options.animationClass) {
                     node.classList.add(...options.animationClass.split(' '));
                 }
@@ -25,6 +26,7 @@ export function viewport(node, options = { threshold: 0.15, once: true, rootMarg
                 }
             } else {
                 node.dispatchEvent(new CustomEvent('exitViewport'));
+                node.dispatchEvent(new CustomEvent('exitviewport'));
                 if (!options.once && options.animationClass) {
                     node.classList.remove(...options.animationClass.split(' '));
                 }
@@ -35,6 +37,7 @@ export function viewport(node, options = { threshold: 0.15, once: true, rootMarg
     function initObserver() {
         if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
             node.dispatchEvent(new CustomEvent('enterViewport'));
+            node.dispatchEvent(new CustomEvent('enterviewport'));
             if (options.animationClass) {
                 node.classList.add(...options.animationClass.split(' '));
             }

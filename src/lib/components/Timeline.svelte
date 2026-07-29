@@ -1,6 +1,6 @@
 <script>
     import { viewport } from '$lib/actions/viewport.js';
-    import { fly } from 'svelte/transition';
+    import { fade, fly } from 'svelte/transition';
 
     let { timelineItems = [] } = $props();
 
@@ -26,21 +26,17 @@
         }
     ];
 
-    let items = $derived(timelineItems.length > 0 ? timelineItems : defaultTimeline);
+    let items = $derived(timelineItems && timelineItems.length > 0 ? timelineItems : defaultTimeline);
 
-    // Track visible items index for staggered animations
-    /** @type {Set<number>} */
-    let visibleItems = $state(new Set());
-
-    /**
-     * @param {number} index
-     */
-    function markVisible(index) {
-        visibleItems.add(index);
-    }
+    let isVisible = $state(false);
 </script>
 
-<section id="timeline" class="py-20 px-4 max-w-4xl mx-auto">
+<section 
+    id="timeline" 
+    use:viewport={{ threshold: 0.15 }}
+    onenterViewport={() => isVisible = true}
+    class="py-20 px-4 max-w-4xl mx-auto overflow-hidden"
+>
     <!-- Header -->
     <div class="text-center space-y-3 mb-16">
         <span class="font-script text-3xl md:text-4xl text-[#f4acb7]">Momen Berharga</span>
@@ -50,39 +46,41 @@
         <div class="w-16 h-0.5 bg-[#f4acb7] mx-auto rounded-full mt-2"></div>
     </div>
 
-    <!-- Vertical Timeline Container -->
-    <div class="relative border-l-2 border-[#f4acb7]/50 ml-4 md:ml-1/2 space-y-12 pb-6">
-        {#each items as item, index (item.id || index)}
-            <div 
-                use:viewport={{ threshold: 0.2 }}
-                onenterViewport={() => markVisible(index)}
-                class="relative pl-8 md:pl-0"
-            >
-                <!-- Timeline Dot Indicator -->
-                <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#f4acb7] border-4 border-white shadow-md z-10 md:left-1/2 md:-translate-x-1/2"></div>
+    {#if isVisible}
+        <div in:fade={{ duration: 600 }} class="relative">
+            <!-- Vertical Line: Left on mobile (20px), Center on desktop (50%) -->
+            <div class="absolute left-5 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#f4acb7] via-[#f4acb7]/60 to-transparent -translate-x-1/2"></div>
 
-                {#if visibleItems.has(index)}
-                    <!-- Animated Timeline Card -->
+            <!-- Timeline Items -->
+            <div class="space-y-8 md:space-y-12 relative">
+                {#each items as item, index (item.id || index)}
                     <div 
-                        in:fly={{ y: 30, duration: 700, delay: 100 }}
-                        class="md:w-5/12 {index % 2 === 0 ? 'md:mr-auto md:text-right md:pr-12' : 'md:ml-auto md:text-left md:pl-12'}"
+                        in:fly={{ y: 30, duration: 600, delay: index * 150 }}
+                        class="relative flex flex-col md:flex-row items-start md:items-center"
                     >
-                        <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/30 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 space-y-3">
-                            <span class="inline-block px-3 py-1 bg-[#fff0f3] border border-[#f4acb7]/40 rounded-full text-xs font-semibold text-[#f4acb7] uppercase tracking-wider">
-                                {item.date_label}
-                            </span>
-                            
-                            <h3 class="font-serif-title text-xl md:text-2xl font-bold text-[#4a3b32]">
-                                {item.title}
-                            </h3>
+                        <!-- Timeline Dot Indicator -->
+                        <div class="absolute left-5 md:left-1/2 top-6 w-4 h-4 rounded-full bg-[#f4acb7] border-4 border-white shadow-md z-10 -translate-x-1/2"></div>
 
-                            <p class="text-sm text-[#4a3b32]/80 leading-relaxed">
-                                {item.description}
-                            </p>
+                        <!-- Card Wrapper -->
+                        <div class="w-full pl-12 md:pl-0 {index % 2 === 0 ? 'md:w-1/2 md:pr-10 md:text-right md:ml-0' : 'md:w-1/2 md:pl-10 md:text-left md:ml-auto'}">
+                            <div class="bg-white/80 backdrop-blur-sm border border-[#f4acb7]/30 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 space-y-3 relative">
+                                <span class="inline-block px-3 py-1 bg-[#fff0f3] border border-[#f4acb7]/40 rounded-full text-xs font-semibold text-[#f4acb7] uppercase tracking-wider">
+                                    {item.date_label}
+                                </span>
+                                
+                                <h3 class="font-serif-title text-xl md:text-2xl font-bold text-[#4a3b32]">
+                                    {item.title}
+                                </h3>
+
+                                <p class="text-sm text-[#4a3b32]/80 leading-relaxed">
+                                    {item.description}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                {/if}
+                {/each}
             </div>
-        {/each}
-    </div>
+        </div>
+    {/if}
 </section>
+
