@@ -7,7 +7,6 @@
         { id: 'hero-section', label: 'Beranda', icon: '🏠' },
         { id: 'chapters', label: 'Bab Cerita', icon: '📖' },
         { id: 'timeline', label: 'Timeline', icon: '⏳' },
-        { id: 'events', label: 'Tempat', icon: '📍' },
         { id: 'gallery', label: 'Foto Cerita', icon: '📸' }
     ];
 

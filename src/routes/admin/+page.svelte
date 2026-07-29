@@ -14,7 +14,6 @@
         { id: 'audio', name: 'Musik MP3', icon: '🎵' },
         { id: 'chapters', name: 'Bab Cerita', icon: '📖', badge: data.chapters ? data.chapters.length : 0 },
         { id: 'timeline', name: 'Garis Waktu', icon: '⏳', badge: data.timeline ? data.timeline.length : 0 },
-        { id: 'spots', name: 'Tempat', icon: '📍' },
         { id: 'gallery', name: 'Kartu Cerita Foto', icon: '📸', badge: data.gallery ? data.gallery.length : 0 }
     ]);
 </script>
@@ -307,91 +306,7 @@
             </div>
         {/if}
 
-        <!-- TAB 4: TEMPAT KENANGAN (SPOTS) -->
-        {#if activeTab === 'spots'}
-            <div transition:fade={{ duration: 200 }} class="bg-white border border-[#f4acb7]/30 rounded-3xl p-5 sm:p-8 shadow-xs space-y-5">
-                <div class="flex items-center space-x-3 border-b border-[#f4acb7]/20 pb-3.5">
-                    <span class="text-2xl">📍</span>
-                    <div>
-                        <h2 class="font-serif-title text-xl sm:text-2xl font-bold text-[#4a3b32]">Tempat Kenangan Indah</h2>
-                        <p class="text-[11px] sm:text-xs text-[#4a3b32]/70">Atur tempat kencan pertama, lokasi perayaan spesial, dan tautan Maps.</p>
-                    </div>
-                </div>
 
-                <form method="POST" action="?/updateConfig" use:enhance class="space-y-6">
-                    <!-- Spot 1 -->
-                    <div class="p-4 sm:p-6 bg-[#fff0f3] border border-[#f4acb7]/40 rounded-2xl space-y-3.5">
-                        <h3 class="font-serif-title text-base sm:text-lg font-bold text-[#4a3b32]">📍 Lokasi Spesial #1 (Misal: Kencan Pertama)</h3>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label for="spot1_title" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Judul Tempat</label>
-                                <input type="text" id="spot1_title" name="spot1_title" value={data.config.spot1_title || 'Tempat Kencan Pertama'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                            </div>
-                            <div>
-                                <label for="spot1_name" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Nama Lokasi / Cafe</label>
-                                <input type="text" id="spot1_name" name="spot1_name" value={data.config.spot1_name || 'Kedai Kopi Kenangan Indah'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label for="spot1_address" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Alamat Lengkap</label>
-                                <input type="text" id="spot1_address" name="spot1_address" value={data.config.spot1_address || 'Jl. Romantic No. 123, Kota Bandung'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                            </div>
-                            <div>
-                                <label for="spot1_maps_url" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Google Maps URL</label>
-                                <input type="url" id="spot1_maps_url" name="spot1_maps_url" value={data.config.spot1_maps_url || 'https://maps.google.com'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="spot1_desc" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Catatan Kenangan</label>
-                            <input type="text" id="spot1_desc" name="spot1_desc" value={data.config.spot1_desc || 'Di mana kecanggungan berubah menjadi tawa.'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                        </div>
-                    </div>
-
-                    <!-- Spot 2 -->
-                    <div class="p-4 sm:p-6 bg-[#fff0f3] border border-[#f4acb7]/40 rounded-2xl space-y-3.5">
-                        <h3 class="font-serif-title text-base sm:text-lg font-bold text-[#4a3b32]">📍 Lokasi Spesial #2 (Misal: Tempat Perayaan)</h3>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label for="spot2_title" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Judul Tempat</label>
-                                <input type="text" id="spot2_title" name="spot2_title" value={data.config.spot2_title || 'Lokasi Perayaan Spesial'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                            </div>
-                            <div>
-                                <label for="spot2_name" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Nama Lokasi / Cafe</label>
-                                <input type="text" id="spot2_name" name="spot2_name" value={data.config.spot2_name || 'Taman Bunga & Resto Senja'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label for="spot2_address" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Alamat Lengkap</label>
-                                <input type="text" id="spot2_address" name="spot2_address" value={data.config.spot2_address || 'Jl. Panoramic No. 45, Kota Bandung'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                            </div>
-                            <div>
-                                <label for="spot2_maps_url" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Google Maps URL</label>
-                                <input type="url" id="spot2_maps_url" name="spot2_maps_url" value={data.config.spot2_maps_url || 'https://maps.google.com'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="spot2_desc" class="block text-xs font-bold uppercase tracking-wider text-[#4a3b32] mb-1">Catatan Kenangan</label>
-                            <input type="text" id="spot2_desc" name="spot2_desc" value={data.config.spot2_desc || 'Tempat impian tempat kami merayakan momen indah.'} class="w-full px-3.5 py-2.5 bg-white border border-[#f4acb7]/30 rounded-xl text-xs" />
-                        </div>
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-[#f4acb7] to-[#e89aa7] hover:brightness-105 text-white font-bold rounded-2xl shadow-md transition-all text-sm active:scale-95"
-                    >
-                        💾 Simpan Semua Lokasi Kenangan
-                    </button>
-                </form>
-            </div>
-        {/if}
 
         <!-- TAB 5: BAB CERITA CINTA (CHAPTERS) -->
         {#if activeTab === 'chapters'}

@@ -7,7 +7,6 @@
     import CoupleProfile from '$lib/components/CoupleProfile.svelte';
     import Timeline from '$lib/components/Timeline.svelte';
     import Gallery from '$lib/components/Gallery.svelte';
-    import EventDetails from '$lib/components/EventDetails.svelte';
 
     let { data } = $props();
 
@@ -86,10 +85,7 @@
     <!-- 7. Vertical Timeline Section -->
     <Timeline timelineItems={data.timeline} />
 
-    <!-- 8. Special Places & Dates -->
-    <EventDetails config={data.config} />
-
-    <!-- 9. Album Foto Kenangan & Catatan Cerita Underneath -->
+    <!-- 8. Album Foto Kenangan & Catatan Cerita Underneath -->
     <Gallery galleryItems={data.gallery} />
 
 
